@@ -1,0 +1,11 @@
+Only mouse visible
+Main core placed at beginning, first 10 seconds
+Radio's make opponent mouse visible when in radius
+Clicking costs mana
+PowerTowers generate mana
+Multiple abilities that are activivated by mana
+
+
+TODO
+
+Random board creation when none found

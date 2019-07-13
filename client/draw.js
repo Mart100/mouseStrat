@@ -1,0 +1,160 @@
+let canvas
+let ctx
+
+
+$(() => {
+  // prepare ctx and canvas
+  canvas = document.getElementById('canvas')
+  ctx = canvas.getContext("2d")
+
+  // Set Canvas size
+  canvas.width = window.innerWidth
+  canvas.height = window.innerHeight
+
+  // begin frame
+  frame()
+})
+
+
+
+function frame() {
+  requestAnimationFrame(frame)
+
+  // Set Canvas size
+  canvas.width = window.innerWidth
+  canvas.height = window.innerHeight
+
+  // Clear Screen
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+
+  draw.buildings()
+  draw.opponentMouse()
+  draw.buildMenu()
+  draw.abilitiesMenu()
+
+}
+
+
+const draw = {
+  opponentMouse() {
+    if(opponentMousePos == undefined) return
+    ctx.fillStyle = 'rgb(255, 0, 0)'
+    ctx.beginPath()
+    ctx.arc(opponentMousePos.x, opponentMousePos.y, 5, 0, 2*Math.PI)
+    ctx.fill()
+  },
+  buildings() {
+    for(let building of buildings) {
+      let buildingData = buildingsData.find(b => b.name == building.type)
+      ctx.strokeStyle = 'rgba(0, 0, 0, 1)'
+      ctx.fillStyle = `rgba(${buildingData.color[0]},${buildingData.color[1]},${buildingData.color[2]},0.5)`
+      ctx.beginPath()
+      ctx.rect(building.position.x, building.position.y, buildingData.size.x, buildingData.size.y)
+      ctx.fill()
+      ctx.stroke()
+    }
+  },
+  buildMenu() {
+    if(!rightDown) return
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
+    ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)'
+    ctx.beginPath()
+    ctx.arc(mousePos.x, mousePos.y, 50, 0, 2*Math.PI)
+    ctx.fill()
+
+    let radiusPerOption = (Math.PI/slotsAmount)*2
+    let BMCO = buildMenuCurrentOption
+    let currentRadius = BMCO*radiusPerOption
+
+    // draw slots
+    let slots = buildingsData.filter(b => b.slot != undefined)
+    for(let i=0;i<slots.length;i++) {
+      let slot = slots.find(s => s.slot == i)
+      let slotRadius = i*radiusPerOption
+      let vec = new Vector(Math.cos(slotRadius), Math.sin(slotRadius)).setMagnitude(50).plus(mousePos)
+      ctx.beginPath()
+      ctx.moveTo(mousePos.x, mousePos.y)
+      ctx.lineTo(vec.x, vec.y)
+      ctx.stroke()
+
+      // draw slot
+
+      ctx.fillStyle = `rgba(${slot.color[0]},${slot.color[1]},${slot.color[2]},0.3)`
+      if(slot.slot == BMCO) ctx.fillStyle = ctx.fillStyle = `rgba(${slot.color[0]/1.5},${slot.color[1]/1.5},${slot.color[2]/1.5},1)`
+
+      // draw end of pie
+      let vec1 = new Vector(Math.cos(slotRadius), Math.sin(slotRadius)).setMagnitude(50).plus(mousePos)
+      let vec2 = new Vector(Math.cos(slotRadius+radiusPerOption), Math.sin(slotRadius+radiusPerOption)).setMagnitude(50).plus(mousePos)
+      ctx.beginPath()
+      ctx.moveTo(mousePos.x, mousePos.y)
+      ctx.lineTo(vec1.x, vec1.y)
+      ctx.lineTo(vec2.x, vec2.y)
+      ctx.fill()
+
+      // draw middle of pie
+      ctx.beginPath()
+      ctx.arc(mousePos.x, mousePos.y, 50, slotRadius, slotRadius+radiusPerOption)
+      ctx.fill()
+
+      // draw text
+      let middlePos = new Vector(Math.cos((i+0.5)*radiusPerOption), Math.sin((i+0.5)*radiusPerOption))
+      middlePos.setMagnitude(25).plus(mousePos)
+      ctx.fillStyle = 'black'
+      ctx.textAlign = "center"
+      ctx.textBaseline = "middle"
+      ctx.fillText(slot.name, middlePos.x, middlePos.y)
+    }
+
+  },
+  abilitiesMenu() {
+    if(!leftDown) return
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
+    ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)'
+    ctx.beginPath()
+    ctx.arc(mousePos.x, mousePos.y, 50, 0, 2*Math.PI)
+    ctx.fill()
+
+    let radiusPerOption = (Math.PI/slotsAmount)*2
+    let BMCO = abilitiesMenuCurrentOption
+    let currentRadius = BMCO*radiusPerOption
+
+    // draw slots
+    let slots = abilitiesData.filter(b => b.slot != undefined)
+    for(let i=0;i<slots.length;i++) {
+      let slot = slots.find(s => s.slot == i)
+      let slotRadius = i*radiusPerOption
+      let vec = new Vector(Math.cos(slotRadius), Math.sin(slotRadius)).setMagnitude(50).plus(mousePos)
+      ctx.beginPath()
+      ctx.moveTo(mousePos.x, mousePos.y)
+      ctx.lineTo(vec.x, vec.y)
+      ctx.stroke()
+
+      ctx.fillStyle = `rgba(${slot.color[0]},${slot.color[1]},${slot.color[2]},0.3)`
+      if(slot.slot == BMCO) ctx.fillStyle = ctx.fillStyle = `rgba(${slot.color[0]},${slot.color[1]},${slot.color[2]},1)`
+
+      // draw end of pie
+      let vec1 = new Vector(Math.cos(slotRadius), Math.sin(slotRadius)).setMagnitude(50).plus(mousePos)
+      let vec2 = new Vector(Math.cos(slotRadius+radiusPerOption), Math.sin(slotRadius+radiusPerOption)).setMagnitude(50).plus(mousePos)
+      ctx.beginPath()
+      ctx.moveTo(mousePos.x, mousePos.y)
+      ctx.lineTo(vec1.x, vec1.y)
+      ctx.lineTo(vec2.x, vec2.y)
+      ctx.fill()
+
+      // draw middle of pie
+      ctx.beginPath()
+      ctx.arc(mousePos.x, mousePos.y, 50, slotRadius, slotRadius+radiusPerOption)
+      ctx.fill()
+
+      // draw text
+      let middlePos = new Vector(Math.cos((i+0.5)*radiusPerOption), Math.sin((i+0.5)*radiusPerOption))
+      middlePos.setMagnitude(25).plus(mousePos)
+      ctx.fillStyle = 'white'
+      ctx.textAlign = "center"
+      ctx.textBaseline = "middle"
+      ctx.fillText(slot.name, middlePos.x, middlePos.y)
+    }
+
+  }
+}

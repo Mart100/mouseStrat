@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title>MouseStrat</title>
+    <meta charset="utf-8"/>
+
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Socket.io -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script> var socket = io(); </script>
+
+    <!-- Custom scripts -->
+    <script src="vector.js"></script>
+    <script src="main.js"></script>
+    <script src="draw.js"></script>
+    <script src="input.js"></script>
+    <script src="buildMenu.js"></script>
+    <script src="abilitiesMenu.js"></script>
+    <script src="socketReceiver.js"></script>
+
+    <!-- Custom CSS files -->
+    <link rel="stylesheet" type="text/css" href="./style.css">
+
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <div id="HUD">
+      <div id="msg"></div>
+      <div id="energy">Energy: 0</div>
+    </div>
+  </body>
+</html>
