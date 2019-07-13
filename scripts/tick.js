@@ -34,11 +34,11 @@ function playerTick(board, player, opponent) {
   }
 
   // increase energy by core
-  player.energy += 0.3
+  player.energy += 0.2
 
   // increase energy by powerTowers
   let powerTowerAmount = playerBuildings.filter(b => b.type == 'Power Tower').length
-  player.energy += (0.1*powerTowerAmount)
+  player.energy += (0.075*powerTowerAmount)
 
   // if opponent detected by radar show
   let opponentDetected = false

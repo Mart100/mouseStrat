@@ -62,6 +62,11 @@ module.exports = (socket, board) => {
     let opponentBuildings = opponent.buildings()
     let playerBuildings = player.buildings()
 
+    // price
+    if(player.energy < abilitieData.price) {
+      return socket.emit('msg', `You need ${Math.round(abilitieData.price-player.energy)} more energy for this ability!`)
+    }
+
     console.log('Ability: ', abilityName)
 
     if(abilityName == 'destroy') {
