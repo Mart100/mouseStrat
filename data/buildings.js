@@ -19,14 +19,7 @@ const buildings = [
     size: {x: 30, y: 30},
     price: '1000',
     slot: 2
-  },
-  {
-    name: 'mine',
-    color: [255, 255, 255],
-    size: {x: 30, y: 30},
-    price: '1000',
-    slot: 3
-  },
+  }
 ]
 
 module.exports = buildings

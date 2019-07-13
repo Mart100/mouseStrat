@@ -36,5 +36,7 @@ socket.on('buildings', (data) => {
 })
 
 socket.on('joined', (data) => {
+  console.log('yes')
+  buildings = []
   history.replaceState(data.id, '', `/${data.id}/`)    
 })

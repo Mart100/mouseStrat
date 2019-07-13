@@ -67,13 +67,39 @@ class Board {
     this.tickCount = 0
     clearInterval(this.tickRunner)
   }
+  win(winner) {
+    // some vars
+    let loser = this.getOpponentBySocketID(winner.socket.id)
+
+    // send all buildings
+    this.socketBroadcast('buildings', this.buildings)
+
+    // send won / lost text
+    winner.socket.emit('msg', 'You won!')
+    loser.socket.emit('msg', 'You lost :(')
+
+    // reset game
+    this.reset()
+  }
   getPlayerBySocketID(id) {
     if(this.player1.socket.id == id) return this.player1
     if(this.player2.socket.id == id) return this.player2
   }
+  getOpponentBySocketID(id) {
+    if(this.player1.socket.id == id) return this.player2
+    if(this.player2.socket.id == id) return this.player1
+  }
   broadcastMSG(msg) {
     if(this.player1 != undefined) this.player1.socket.emit('msg', msg)
     if(this.player2 != undefined) this.player2.socket.emit('msg', msg)
+  }
+  socketBroadcast(channel, data) {
+    this.player1.socket.emit(channel, data)
+    this.player2.socket.emit(channel, data)
+  }
+  sendBuildings(player) {
+    let playerBuildings = this.getPlayerBuildings(player)
+    player.socket.emit('buildings', playerBuildings)
   }
   getPlayerBuildings(player) {
     let playerBuildings = []

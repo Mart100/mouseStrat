@@ -50,7 +50,9 @@ const draw = {
       ctx.strokeStyle = 'rgba(0, 0, 0, 1)'
       ctx.fillStyle = `rgba(${buildingData.color[0]},${buildingData.color[1]},${buildingData.color[2]},0.5)`
       ctx.beginPath()
-      ctx.rect(building.position.x, building.position.y, buildingData.size.x, buildingData.size.y)
+      let posX = building.position.x - buildingData.size.x/2
+      let posY = building.position.y - buildingData.size.y/2
+      ctx.rect(posX, posY, buildingData.size.x, buildingData.size.y)
       ctx.fill()
       ctx.stroke()
     }
@@ -115,14 +117,13 @@ const draw = {
     ctx.arc(mousePos.x, mousePos.y, 50, 0, 2*Math.PI)
     ctx.fill()
 
-    let radiusPerOption = (Math.PI/slotsAmount)*2
+    let radiusPerOption = (Math.PI/abilitiesData.length)*2
     let BMCO = abilitiesMenuCurrentOption
     let currentRadius = BMCO*radiusPerOption
 
     // draw slots
-    let slots = abilitiesData.filter(b => b.slot != undefined)
-    for(let i=0;i<slots.length;i++) {
-      let slot = slots.find(s => s.slot == i)
+    for(let i=0;i<abilitiesData.length;i++) {
+      let slot = abilitiesData.find(s => s.slot == i)
       let slotRadius = i*radiusPerOption
       let vec = new Vector(Math.cos(slotRadius), Math.sin(slotRadius)).setMagnitude(50).plus(mousePos)
       ctx.beginPath()

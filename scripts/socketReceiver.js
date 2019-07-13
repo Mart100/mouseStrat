@@ -1,4 +1,5 @@
 const utils = require('./utils.js')
+const Vector = require('./vector.js')
 const buildingsData = require('../data/buildings.js')
 
 module.exports = (socket, board) => {
@@ -19,6 +20,7 @@ module.exports = (socket, board) => {
 
   // on build
   socket.on('build', (buildingName) => {
+    if(!board.started) return
     let player = board.getPlayerBySocketID(socket.id)
     let building = buildingsData.find(b => b.name == buildingName)
     if(building == undefined) return socket.emit('msg', 'Building Not Found!')
@@ -29,12 +31,30 @@ module.exports = (socket, board) => {
   })
 
   // on ability
-  socket.on('ability', (buildingName) => {
-    
+  socket.on('ability', (abilityName) => {
+    if(!board.started) return
+    console.log('Ability: ', abilityName)
+    if(abilityName == 'destroy') {
+      let opponent = board.getOpponentBySocketID(socket.id)
+      let player = board.getPlayerBySocketID(socket.id)
+      let opponentBuildings = opponent.buildings()
+
+      for(let building of opponentBuildings) {
+        let distance = new Vector(building.position).minus(player.position).getMagnitude()
+        if(distance < 50) {
+          let index = board.buildings.indexOf(building)
+          board.buildings.splice(index, 1)
+          board.sendBuildings(opponent)
+
+          if(building.type == 'core') board.win(player)
+        }
+      }
+    } 
   })
 
   // on click
   socket.on('mouseclick', () => {
+    if(!board.started) return
     let player = board.getPlayerBySocketID(socket.id)
     let playerBuildings = player.buildings()
 

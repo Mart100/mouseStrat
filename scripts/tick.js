@@ -34,7 +34,7 @@ function playerTick(board, player, opponent) {
   }
 
   // increase energy by core
-  player.energy += 1
+  player.energy += 0.1
 
   // increase energy by powerTowers
   let powerTowerAmount = playerBuildings.filter(b => b.type == 'powerTower').length

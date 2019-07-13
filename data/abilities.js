@@ -8,9 +8,16 @@ const abilities = [
   },
   {
     name: 'sight',
-    color: [255, 150, 150],
+    color: [150, 150, 255],
     size: {x: 20, y: 20},
     slot: 1,
+    price: 100
+  },
+  {
+    name: 'trail',
+    color: [255, 150, 150],
+    size: {x: 20, y: 20},
+    slot: 2,
     price: 100
   },
   {
@@ -18,7 +25,7 @@ const abilities = [
     color: [0, 0, 0],
     size: {x: 30, y: 30},
     price: 50,
-    slot: 2
+    slot: 3
   },
 ]
 
