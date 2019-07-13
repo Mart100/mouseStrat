@@ -47,7 +47,18 @@ const draw = {
   buildings() {
     for(let building of buildings) {
       let buildingData = buildingsData.find(b => b.name == building.type)
+
+      // if range. Draw range
+      if(buildingData.range != undefined) {
+        ctx.fillStyle = `rgba(${buildingData.color[0]},${buildingData.color[1]},${buildingData.color[2]},0.02)`
+        ctx.beginPath()
+        let posX = building.position.x
+        let posY = building.position.y
+        ctx.arc(posX, posY, buildingData.range, 0, 2*Math.PI)
+        ctx.fill()
+      }
       ctx.strokeStyle = 'rgba(0, 0, 0, 1)'
+      if(building.owner != socket.id) ctx.strokeStyle = 'rgba(255, 0, 0, 1)'
       ctx.fillStyle = `rgba(${buildingData.color[0]},${buildingData.color[1]},${buildingData.color[2]},0.5)`
       ctx.beginPath()
       let posX = building.position.x - buildingData.size.x/2
@@ -101,11 +112,15 @@ const draw = {
 
       // draw text
       let middlePos = new Vector(Math.cos((i+0.5)*radiusPerOption), Math.sin((i+0.5)*radiusPerOption))
-      middlePos.setMagnitude(25).plus(mousePos)
-      ctx.fillStyle = 'black'
+      middlePos.setMagnitude(50).plus(mousePos)
+      ctx.fillStyle = 'white'
       ctx.textAlign = "center"
       ctx.textBaseline = "middle"
       ctx.fillText(slot.name, middlePos.x, middlePos.y)
+      // draw price
+      let price = calculateBuildingPrice(slot.name) + '⚡'
+      middlePos.minus(mousePos).setMagnitude(35).plus(mousePos)
+      ctx.fillText(price, middlePos.x, middlePos.y)
     }
 
   },
@@ -150,11 +165,16 @@ const draw = {
 
       // draw text
       let middlePos = new Vector(Math.cos((i+0.5)*radiusPerOption), Math.sin((i+0.5)*radiusPerOption))
-      middlePos.setMagnitude(25).plus(mousePos)
+      middlePos.setMagnitude(50).plus(mousePos)
       ctx.fillStyle = 'white'
       ctx.textAlign = "center"
       ctx.textBaseline = "middle"
       ctx.fillText(slot.name, middlePos.x, middlePos.y)
+      // draw price
+      let price = slot.price + '⚡'
+      middlePos.minus(mousePos).setMagnitude(35).plus(mousePos)
+      ctx.fillText(price, middlePos.x, middlePos.y)
+      
     }
 
   }

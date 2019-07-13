@@ -4,8 +4,5 @@ Radio's make opponent mouse visible when in radius
 Clicking costs mana
 PowerTowers generate mana
 Multiple abilities that are activivated by mana
-
-
-TODO
-
-Random board creation when none found
+Only place buildings at other close buildings
+With PowerLines

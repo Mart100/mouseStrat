@@ -4,7 +4,7 @@ const abilities = [
     color: [255, 50, 50],
     size: {x: 20, y: 20},
     slot: 0,
-    price: 250
+    price: 100
   },
   {
     name: 'sight',

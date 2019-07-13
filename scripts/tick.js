@@ -27,25 +27,25 @@ function playerTick(board, player, opponent) {
 
   // if prepare fase over. But not placed core. Random place
   if(board.tickCount == 1000) {
-    if(playerBuildings.find(b => b.type == 'core') == undefined) {
+    if(playerBuildings.find(b => b.type == 'Core') == undefined) {
       let randomPos = new Vector(Math.round(Math.random()*board.size.x), Math.round(Math.random()*board.size.y))
-      board.build('core', randomPos, player.socket.id)
+      board.build('Core', randomPos, player.socket.id)
     }
   }
 
   // increase energy by core
-  player.energy += 0.1
+  player.energy += 0.3
 
   // increase energy by powerTowers
-  let powerTowerAmount = playerBuildings.filter(b => b.type == 'powerTower').length
-  player.energy += (0.05*powerTowerAmount)
+  let powerTowerAmount = playerBuildings.filter(b => b.type == 'Power Tower').length
+  player.energy += (0.1*powerTowerAmount)
 
   // if opponent detected by radar show
   let opponentDetected = false
-  let radios = playerBuildings.filter(b => b.type == 'radio')
+  let radios = playerBuildings.filter(b => b.type == 'Radio')
   for(let radio of radios) {
     let distance = new Vector(radio.position).minus(opponent.position).getMagnitude()
-    if(distance < 150) opponentDetected = true
+    if(distance < 250) opponentDetected = true
   }
 
   if(opponentDetected) player.socket.emit('opponentMousePos', opponent.position)
