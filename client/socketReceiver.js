@@ -34,3 +34,7 @@ socket.on('energy', (data) => {
 socket.on('buildings', (data) => {
   buildings = data
 })
+
+socket.on('joined', (data) => {
+  history.replaceState(data.id, '', `/${data.id}/`)    
+})

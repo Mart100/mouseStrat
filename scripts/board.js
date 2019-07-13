@@ -40,6 +40,7 @@ class Board {
     if(playerNum == 2) this.start()
 
     this.socketReceiver(socket, this)
+    socket.emit('joined', {id: this.id})
 
     return 'JOINED'
 
