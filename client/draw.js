@@ -29,6 +29,7 @@ function frame() {
 
 
   draw.buildings()
+  draw.abilityEffects()
   draw.opponentMouse()
   draw.trail()
   draw.buildMenu()
@@ -147,6 +148,32 @@ const draw = {
     }
 
   },
+  abilityEffects() {
+    for(let effect of abilityEffects) {
+      let stage = effect.tickCount / effect.duration
+      let posX = 0
+      let posY = 0
+
+      if(effect.follow && effect.by == socket.id) {
+        posX = mousePos.x
+        posY = mousePos.y
+      }
+      else {
+        posX = effect.position.x
+        posY = effect.position.y
+      }
+
+      ctx.fillStyle = `rgba(${effect.color[0]},${effect.color[1]},${effect.color[2]},0.1)`
+      ctx.strokeStyle = `rgba(${effect.color[0]},${effect.color[1]},${effect.color[2]},0.1)`
+
+      ctx.beginPath()
+      
+      if(effect.type == 'circle') ctx.arc(posX, posY, effect.range, 0, 2*Math.PI)
+      if(effect.type == 'expand') ctx.arc(posX, posY, stage*effect.range, 0, 2*Math.PI)
+
+      ctx.fill()
+    }
+  },
   abilitiesMenu() {
     if(!leftDown) return
     ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
@@ -192,11 +219,7 @@ const draw = {
       ctx.fillStyle = 'white'
       ctx.textAlign = "center"
       ctx.textBaseline = "middle"
-      ctx.fillText(slot.name, middlePos.x, middlePos.y)
-      // draw price
-      let price = slot.price + '⚡'
-      middlePos.minus(mousePos).setMagnitude(35).plus(mousePos)
-      ctx.fillText(price, middlePos.x, middlePos.y)
+      ctx.fillText(slot.name+' '+slot.price+'⚡', middlePos.x, middlePos.y)
       
     }
 

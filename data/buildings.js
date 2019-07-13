@@ -19,8 +19,13 @@ const buildings = [
     color: [255, 255, 255],
     size: {x: 30, y: 30},
     price: '1000',
-    range: 150,
-    slot: 2
+    range: 150
+  },
+  {
+    name: 'Fake Core',
+    color: [255, 255, 255],
+    size: {x: 30, y: 30},
+    price: '5000'
   },
   {
     name: 'Electricity Box',
@@ -28,7 +33,7 @@ const buildings = [
     size: {x: 15, y: 15},
     price: '100',
     range: 100,
-    slot: 3
+    slot: 2
   }
 ]
 

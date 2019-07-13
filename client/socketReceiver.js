@@ -41,8 +41,22 @@ socket.on('joined', (data) => {
   history.replaceState(data.id, '', `/${data.id}/`)    
 })
 
+let abilityEffects = []
 socket.on('abilityUsed', data => {
+  let abilityEffectData = abilitiesData.find(a => a.name == data.type).effect
+  let effect = {
+    by: data.by,
+    ability: data.type,
+    tickCount: 0,
+    color: abilityEffectData.color,
+    duration: abilityEffectData.duration,
+    type: abilityEffectData.type,
+    range: abilityEffectData.range,
+    follow: abilityEffectData.follow,
+    position: data.pos
+  }
 
+  abilityEffects.push(effect)
 })
 
 let trail = []

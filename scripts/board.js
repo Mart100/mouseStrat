@@ -31,6 +31,7 @@ class Board {
       health: 100,
       position: { x: 0, y: 0 },
       positionHistory: [],
+      invisible: false,
       buildings: () => { return this.getPlayerBuildings(player) }
     }
   

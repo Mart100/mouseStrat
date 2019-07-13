@@ -56,15 +56,15 @@ module.exports = (socket, board) => {
   socket.on('ability', (abilityName) => {
     if(!board.started) return
 
-    let abilitieData = abilitiesData.find(a => a.name == abilityName)
+    let abilityData = abilitiesData.find(a => a.name == abilityName)
     let opponent = board.getOpponentBySocketID(socket.id)
     let player = board.getPlayerBySocketID(socket.id)
     let opponentBuildings = opponent.buildings()
     let playerBuildings = player.buildings()
 
     // price
-    if(player.energy < abilitieData.price) {
-      return socket.emit('msg', `You need ${Math.round(abilitieData.price-player.energy)} more energy for this ability!`)
+    if(player.energy < abilityData.price) {
+      return socket.emit('msg', `You need ${Math.round(abilityData.price-player.energy)} more energy for this ability!`)
     }
 
     console.log('Ability: ', abilityName)
@@ -97,10 +97,19 @@ module.exports = (socket, board) => {
     if(abilityName == 'trail') {
       socket.emit('trail', opponent.positionHistory)
     }
+    if(abilityName == 'invisible') {
+      player.invisible = true
+      setTimeout(() => {
+        player.invisible = false
+      }, 10000)
+    }
+    
+    if(abilityData.effect != undefined) {
+      if(abilityData.effect.to[0]) player.socket.emit('abilityUsed', {type: abilityName, by: player.socket.id, pos: player.position})
+      if(abilityData.effect.to[1]) opponent.socket.emit('abilityUsed', {type: abilityName, by: player.socket.id, pos: player.position})
+    }
 
-    // send to players
-    board.socketBroadcast('abilityUsed', {type: abilityName, by: player.socket.id})
-    player.energy -= abilitieData.price
+    player.energy -= abilityData.price
   })
 
   // on click

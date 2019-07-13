@@ -54,6 +54,7 @@ function playerTick(board, player, opponent) {
     if(distance < 250) opponentDetected = true
   }
 
+  if(opponent.invisible) opponentDetected = false
   if(opponentDetected) player.socket.emit('opponentMousePos', opponent.position)
   else player.socket.emit('opponentMousePos', {x:-111,y:-111})
 
