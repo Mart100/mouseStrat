@@ -79,7 +79,8 @@ const draw = {
   },
   trail() {
     ctx.beginPath()
-    ctx.lineWidth = 5
+    ctx.strokeStyle = 'rgb(255,0,0)'
+    ctx.lineWidth = 2
 
     for(let i in trail) {
       let pos = trail[i]
