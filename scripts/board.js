@@ -30,6 +30,7 @@ class Board {
       energy: 0,
       health: 100,
       position: { x: 0, y: 0 },
+      positionHistory: [],
       buildings: () => { return this.getPlayerBuildings(player) }
     }
   
@@ -94,8 +95,8 @@ class Board {
     if(this.player2 != undefined) this.player2.socket.emit('msg', msg)
   }
   socketBroadcast(channel, data) {
-    this.player1.socket.emit(channel, data)
-    this.player2.socket.emit(channel, data)
+    if(this.player1 != undefined) this.player1.socket.emit(channel, data)
+    if(this.player2 != undefined) this.player2.socket.emit(channel, data)
   }
   sendBuildings(player) {
     let playerBuildings = this.getPlayerBuildings(player)

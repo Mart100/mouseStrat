@@ -22,8 +22,14 @@ module.exports = (board) => {
 
 function playerTick(board, player, opponent) {
 
+  if(player == undefined) return
+
   // some variables
   let playerBuildings = board.getPlayerBuildings(player)
+
+  // save trail
+  player.positionHistory.push(player.position)
+  if(player.positionHistory.length > 1000) player.positionHistory.shift()
 
   // if prepare fase over. But not placed core. Random place
   if(board.tickCount == 1000) {

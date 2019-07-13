@@ -94,7 +94,12 @@ module.exports = (socket, board) => {
 
       setTimeout(() => { board.sendBuildings(player) }, 2000)
     }
+    if(abilityName == 'trail') {
+      socket.emit('trail', opponent.positionHistory)
+    }
 
+    // send to players
+    board.socketBroadcast('abilityUsed', {type: abilityName, by: player.socket.id})
     player.energy -= abilitieData.price
   })
 

@@ -2,6 +2,7 @@ let leftDown = false
 let abilitiesMenuCurrentOption = 0
 
 $(() => {
+
   $(document).on('mousedown', (e) => {
     if(e.button != 0) return
     if(rightDown) return

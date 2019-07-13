@@ -12,3 +12,9 @@ function calculateBuildingPrice(name) {
     }
   }
 }
+
+function normalizeRadians(a) {
+  if(a > Math.PI) a -= Math.PI
+  if(a < 0) a += Math.PI
+  return a
+}

@@ -40,3 +40,13 @@ socket.on('joined', (data) => {
   buildings = []
   history.replaceState(data.id, '', `/${data.id}/`)    
 })
+
+socket.on('abilityUsed', data => {
+
+})
+
+let trail = []
+socket.on('trail', data => {
+  trail = data
+  setTimeout(() => {trail = []}, 5000)
+})

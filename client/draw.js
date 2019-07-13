@@ -30,13 +30,22 @@ function frame() {
 
   draw.buildings()
   draw.opponentMouse()
+  draw.trail()
   draw.buildMenu()
   draw.abilitiesMenu()
+  draw.ownMouse()
 
 }
 
 
 const draw = {
+  ownMouse() {
+    if(!mouseLocked) return
+    ctx.fillStyle = 'rgb(200, 200, 255)'
+    ctx.beginPath()
+    ctx.arc(mousePos.x, mousePos.y, 5, 0, 2*Math.PI)
+    ctx.fill()
+  },
   opponentMouse() {
     if(opponentMousePos == undefined) return
     ctx.fillStyle = 'rgb(255, 0, 0)'
@@ -67,6 +76,19 @@ const draw = {
       ctx.fill()
       ctx.stroke()
     }
+  },
+  trail() {
+    ctx.beginPath()
+    ctx.lineWidth = 5
+
+    for(let i in trail) {
+      let pos = trail[i]
+
+      if(i == 0) ctx.moveTo(pos.x, pos.y)
+      else ctx.lineTo(pos.x, pos.y)
+      
+    }
+    ctx.stroke()
   },
   buildMenu() {
     if(!rightDown) return

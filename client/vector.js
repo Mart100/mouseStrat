@@ -82,6 +82,8 @@ class Vector {
   setMagnitude(a) {
     let magnitude = this.getMagnitude()
 
+    if(magnitude == 0) return this
+
     let x = (this.x/magnitude)*a
     let y = (this.y/magnitude)*a
 
@@ -92,9 +94,13 @@ class Vector {
   }
   getMagnitude() {
     let magnitude = Math.sqrt(this.x*this.x + this.y*this.y)
+    if(isNaN(magnitude)) return 0
     return magnitude
   }
   clone() {
     return new Vector(this.x, this.y)
+  }
+  getAngle() {
+    return Math.atan2(this.y, this.x)
   }
 }

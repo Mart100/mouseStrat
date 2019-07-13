@@ -1,26 +1,42 @@
 let rightDown = false
 let buildMenuCurrentOption = 0
 let slotsAmount = 0
+let buildMenuMousePos = new Vector(0, 0)
 
 $(() => {
   $(document).on('mousedown', (e) => {
     if(e.button != 2) return
     if(leftDown) return
     rightDown = true
+    buildMenuMousePos = new Vector(buildMenuMousePos).setMagnitude(1)
   })
 
   $(document).on('mouseup', (e) => {
     if(e.button != 2) return
     rightDown = false
+    if(buildMenuCurrentOption == 999) return
+    let slots = buildingsData.filter(b => b.slot != undefined)
+    let slot = slots.find(s => s.slot == buildMenuCurrentOption)
+    socket.emit('build', slot.name)
+  })
+
+  document.addEventListener('mousemove', (e) => {
+    if(!rightDown) return
+    buildMenuMousePos.x += e.movementX
+    buildMenuMousePos.y += e.movementY
+    if(buildMenuMousePos.getMagnitude() > 150) buildMenuMousePos.setMagnitude(150)
+    if(buildMenuMousePos.getMagnitude() < 100) return buildMenuCurrentOption = 999
+    let angle = buildMenuMousePos.clone().getAngle()/2
+    angle = normalizeRadians(angle)
+    let radiusPerOption = (Math.PI/slotsAmount)
+    let fits = Math.floor(angle/radiusPerOption)
+    buildMenuCurrentOption = fits
   })
 
   // normal click
   $(document).on('mouseup', (e) => {
     if(e.button != 0) return
     if(!rightDown) return
-    let slots = buildingsData.filter(b => b.slot != undefined)
-    let slot = slots.find(s => s.slot == buildMenuCurrentOption)
-    socket.emit('build', slot.name)
   })
 
   // Scroll
