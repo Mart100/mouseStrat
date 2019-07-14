@@ -2,12 +2,14 @@ let rightDown = false
 let buildMenuCurrentOption = 0
 let slotsAmount = 0
 let buildMenuMousePos = new Vector(0, 0)
+let buildMenuPos = new Vector(0, 0)
 
 function setupBuildMenu() {
   $(document).on('mousedown', (e) => {
     if(e.button != 2) return
     if(leftDown) return
     rightDown = true
+    buildMenuPos = new Vector(mousePos)
     buildMenuMousePos = new Vector(buildMenuMousePos).setMagnitude(1)
   })
 
@@ -22,11 +24,9 @@ function setupBuildMenu() {
 
   document.addEventListener('mousemove', (e) => {
     if(!rightDown) return
-    buildMenuMousePos.x += e.movementX
-    buildMenuMousePos.y += e.movementY
-    if(buildMenuMousePos.getMagnitude() > 150) buildMenuMousePos.setMagnitude(150)
-    if(buildMenuMousePos.getMagnitude() < 100) return buildMenuCurrentOption = 999
-    let angle = buildMenuMousePos.clone().getAngle()/2
+    let vec = buildMenuPos.clone().minus(new Vector(mousePos))
+    if(vec.getMagnitude() > 200) return buildMenuCurrentOption = 999
+    let angle = vec.clone().rotate(Math.PI).getAngle()/2
     angle = normalizeRadians(angle)
     let radiusPerOption = (Math.PI/slotsAmount)
     let fits = Math.floor(angle/radiusPerOption)

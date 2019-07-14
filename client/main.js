@@ -18,7 +18,7 @@ $(() => {
       </div>
     `)
 
-    socket.emit('findGame', {})
+    socket.emit('findGame', '')
   }
   
   // show homepage

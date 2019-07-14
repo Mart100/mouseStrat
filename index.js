@@ -10,6 +10,9 @@ const Board = require('./scripts/board.js')
 const buildingsData = require('./data/buildings.js')
 const abilitiesData = require('./data/abilities.js')
 
+// start bot
+require('./bot/main.js')
+
 // listen on port :)
 const server = app.listen(process.env.PORT || 3000, () => {
   console.log('FITYMI is listening on port ' + server.address().port)
@@ -30,14 +33,17 @@ app.use('/:id/', express.static('client'))
 io.on('connection', (socket) => {
   console.log('CONNECT: ', socket.id)
 
-  socket.on('findGame', () => {
+  socket.on('findGame', (gameID2) => {
 
     // always send this
     socket.emit('buildingsData', buildingsData)
     socket.emit('abilitiesData', abilitiesData)
 
     // get gameID
-    let gameID = socket.handshake.headers.referer.split('/')[3]
+    let gameID
+    if(gameID2 != '') gameID = gameID2
+    else gameID = socket.handshake.headers.referer.split('/')[3]
+
     if(gameID == 'find') gameID = findRandomOpenBoard()
     if(gameID == '') return
 

@@ -94,24 +94,27 @@ const draw = {
   },
   buildMenu() {
     if(!rightDown) return
+
+    let radiusPerOption = (Math.PI/slotsAmount)*2
+    let pos = buildMenuPos
+    let BMCO = buildMenuCurrentOption
+    let currentRadius = BMCO*radiusPerOption
+
+    // draw circle
     ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
     ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)'
     ctx.beginPath()
-    ctx.arc(mousePos.x, mousePos.y, 50, 0, 2*Math.PI)
+    ctx.arc(pos.x, pos.y, 50, 0, 2*Math.PI)
     ctx.fill()
-
-    let radiusPerOption = (Math.PI/slotsAmount)*2
-    let BMCO = buildMenuCurrentOption
-    let currentRadius = BMCO*radiusPerOption
 
     // draw slots
     let slots = buildingsData.filter(b => b.slot != undefined)
     for(let i=0;i<slots.length;i++) {
       let slot = slots.find(s => s.slot == i)
       let slotRadius = i*radiusPerOption
-      let vec = new Vector(Math.cos(slotRadius), Math.sin(slotRadius)).setMagnitude(50).plus(mousePos)
+      let vec = new Vector(Math.cos(slotRadius), Math.sin(slotRadius)).setMagnitude(50).plus(pos)
       ctx.beginPath()
-      ctx.moveTo(mousePos.x, mousePos.y)
+      ctx.moveTo(pos.x, pos.y)
       ctx.lineTo(vec.x, vec.y)
       ctx.stroke()
 
@@ -121,29 +124,29 @@ const draw = {
       if(slot.slot == BMCO) ctx.fillStyle = ctx.fillStyle = `rgba(${slot.color[0]/1.5},${slot.color[1]/1.5},${slot.color[2]/1.5},1)`
 
       // draw end of pie
-      let vec1 = new Vector(Math.cos(slotRadius), Math.sin(slotRadius)).setMagnitude(50).plus(mousePos)
-      let vec2 = new Vector(Math.cos(slotRadius+radiusPerOption), Math.sin(slotRadius+radiusPerOption)).setMagnitude(50).plus(mousePos)
+      let vec1 = new Vector(Math.cos(slotRadius), Math.sin(slotRadius)).setMagnitude(50).plus(pos)
+      let vec2 = new Vector(Math.cos(slotRadius+radiusPerOption), Math.sin(slotRadius+radiusPerOption)).setMagnitude(50).plus(pos)
       ctx.beginPath()
-      ctx.moveTo(mousePos.x, mousePos.y)
+      ctx.moveTo(pos.x, pos.y)
       ctx.lineTo(vec1.x, vec1.y)
       ctx.lineTo(vec2.x, vec2.y)
       ctx.fill()
 
       // draw middle of pie
       ctx.beginPath()
-      ctx.arc(mousePos.x, mousePos.y, 50, slotRadius, slotRadius+radiusPerOption)
+      ctx.arc(pos.x, pos.y, 50, slotRadius, slotRadius+radiusPerOption)
       ctx.fill()
 
       // draw text
       let middlePos = new Vector(Math.cos((i+0.5)*radiusPerOption), Math.sin((i+0.5)*radiusPerOption))
-      middlePos.setMagnitude(50).plus(mousePos)
+      middlePos.setMagnitude(50).plus(pos)
       ctx.fillStyle = 'white'
       ctx.textAlign = "center"
       ctx.textBaseline = "middle"
       ctx.fillText(slot.name, middlePos.x, middlePos.y)
       // draw price
       let price = calculateBuildingPrice(slot.name) + '⚡'
-      middlePos.minus(mousePos).setMagnitude(35).plus(mousePos)
+      middlePos.minus(pos).setMagnitude(35).plus(pos)
       ctx.fillText(price, middlePos.x, middlePos.y)
     }
 

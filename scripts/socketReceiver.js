@@ -85,7 +85,6 @@ module.exports = (socket, board) => {
       for(let building of opponentBuildings) {
         let distance = new Vector(building.position).minus(player.position).getMagnitude()
         if(distance < 100) {
-          if(building.type == 'Core' && distance > 50) continue
           playerBuildings.push(building)
         }
       }
