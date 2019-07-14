@@ -1,9 +1,10 @@
 let mousePos = {x: window.innerWidth/2, y: window.innerHeight/2}
 let mouseLocked = false
 
-$(() => {
+function configureInputs() {
 
   // set pointerLock things
+  let canvas = $('canvas')[0]
   canvas.requestPointerLock = canvas.requestPointerLock || canvas.mozRequestPointerLock
   canvas.exitPointerLock = canvas.exitPointerLock || canvas.mozExitPointerLock
 
@@ -36,7 +37,7 @@ $(() => {
     } 
     else socket.emit('mouseclick')
   })
-})
+}
 
 function lockChange() {
   if(document.pointerLockElement === canvas || document.mozPointerLockElement === canvas) mouseLocked = true

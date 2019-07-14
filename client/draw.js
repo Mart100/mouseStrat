@@ -2,7 +2,7 @@ let canvas
 let ctx
 
 
-$(() => {
+function startDrawing() {
   // prepare ctx and canvas
   canvas = document.getElementById('canvas')
   ctx = canvas.getContext("2d")
@@ -13,7 +13,7 @@ $(() => {
 
   // begin frame
   frame()
-})
+}
 
 
 

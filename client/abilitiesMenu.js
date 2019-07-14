@@ -1,7 +1,7 @@
 let leftDown = false
 let abilitiesMenuCurrentOption = 0
 
-$(() => {
+function setupAbilitiesMenu() {
 
   $(document).on('mousedown', (e) => {
     if(e.button != 0) return
@@ -29,4 +29,4 @@ $(() => {
       if(abilitiesMenuCurrentOption < 0) abilitiesMenuCurrentOption = abilitiesData.length-1
     }
   })
-})
+}

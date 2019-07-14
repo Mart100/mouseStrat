@@ -3,7 +3,7 @@ let buildMenuCurrentOption = 0
 let slotsAmount = 0
 let buildMenuMousePos = new Vector(0, 0)
 
-$(() => {
+function setupBuildMenu() {
   $(document).on('mousedown', (e) => {
     if(e.button != 2) return
     if(leftDown) return
@@ -50,4 +50,4 @@ $(() => {
       if(buildMenuCurrentOption < 0) buildMenuCurrentOption = slotsAmount-1
     }
   })
-})
+}

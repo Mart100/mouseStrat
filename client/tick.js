@@ -1,9 +1,3 @@
-$(() => {
-  setInterval(() => {
-    tick()
-  }, 10)
-})
-
 function tick() {
   // time ability effects
   for(let effect of abilityEffects) {

@@ -4,6 +4,7 @@ socket.on('msg', (data) => {
   $('#msg').html(data)
   $('#msg').fadeIn(500)
   if(msgFadingTimeout != undefined) clearInterval(msgFadingTimeout)
+  if(data == 'Waiting for opponent...') return
   msgFadingTimeout = setTimeout(() => {
     $('#msg').html('')
     $('#msg').fadeOut(0)
@@ -38,7 +39,12 @@ socket.on('buildings', (data) => {
 socket.on('joined', (data) => {
   console.log('yes')
   buildings = []
-  history.replaceState(data.id, '', `/${data.id}/`)    
+  history.replaceState(data.id, '', `/${data.id}/`)
+  startDrawing()
+  configureInputs()
+  setupBuildMenu()
+  setupAbilitiesMenu()
+  setInterval(() => { tick() }, 10)
 })
 
 let abilityEffects = []

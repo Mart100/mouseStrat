@@ -30,24 +30,28 @@ app.use('/:id/', express.static('client'))
 io.on('connection', (socket) => {
   console.log('CONNECT: ', socket.id)
 
-  // always send this
-  socket.emit('buildingsData', buildingsData)
-  socket.emit('abilitiesData', abilitiesData)
+  socket.on('findGame', () => {
 
-  // get gameID
-  let gameID = socket.handshake.headers.referer.split('/')[3]
-  if(gameID == '') gameID = findRandomOpenBoard()
+    // always send this
+    socket.emit('buildingsData', buildingsData)
+    socket.emit('abilitiesData', abilitiesData)
 
-  if(boards[gameID] == undefined) {
-    if(gameID == 'none') gameID = utils.randomToken(5)
-    boards[gameID] = new Board(gameID, {})
-  }
-  
-  let board = boards[gameID]
+    // get gameID
+    let gameID = socket.handshake.headers.referer.split('/')[3]
+    if(gameID == 'find') gameID = findRandomOpenBoard()
+    if(gameID == '') return
 
-  let response = board.join(socket)
+    if(boards[gameID] == undefined) {
+      if(gameID == 'none') gameID = utils.randomToken(5)
+      boards[gameID] = new Board(gameID, {})
+    }
+    
+    let board = boards[gameID]
 
-  if(response == 'FULL') return socket.emit('msg', 'This board is already full!')
+    let response = board.join(socket)
+
+    if(response == 'FULL') return socket.emit('msg', 'This board is already full!')
+  })
 
 })
 
