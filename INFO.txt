@@ -1,0 +1,6 @@
+RANGES:
+  radio: 250
+  Core: 150
+  Electricity box: 100
+  sight: 100
+  destroy: 30

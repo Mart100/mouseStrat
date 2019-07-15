@@ -19,6 +19,7 @@ function setupBuildMenu() {
     if(buildMenuCurrentOption == 999) return
     let slots = buildingsData.filter(b => b.slot != undefined)
     let slot = slots.find(s => s.slot == buildMenuCurrentOption)
+    socket.emit('mouse', buildMenuPos)
     socket.emit('build', slot.name)
   })
 

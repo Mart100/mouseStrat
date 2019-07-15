@@ -23,11 +23,11 @@ socket.on('msg', (msg) => {
 
 async function gameStart() {
   // place core at 1000 500
-  socket.emit('mouse', {x: 1000, y: 500})
+  socket.emit('mouse', {x: 10, y: 10})
   socket.emit('mouseclick')
 
   // place energyTower at 1050 500
-  socket.emit('mouse', {x: 1050, y: 500})
+  socket.emit('mouse', {x: 50, y: 10})
   socket.emit('build', 'Power Tower')
 }
 
