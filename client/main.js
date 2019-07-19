@@ -31,6 +31,8 @@ $(() => {
     <a href="https://martve.me">Made by: Marto_0</a>
     <br><br>
     <a href="https://discord.gg/3S5SyXP">Join us on discord:<br> <img src="https://i.imgur.com/yoSi7FR.png"/></a>
+    <br><br>
+    <a href="https://iogames.space/">More IO Games</a>
     </center>
     `)
     $('#play').on('click', () => {

@@ -1,0 +1,61 @@
+DESCRIPTION:
+  MouseStrat is an online 2D strategy game. 
+  With a plottwist... You can't see any of your opponents buildings. Only with the use of an ability.
+  The goal of the game is to find where your opponent is hiding and destroy your opponents core.
+  To achieve this you can use buildings and abilities. Altough these do cost energy.
+  An important part of the game is that the opponent will be able to see your mouse.
+  Knowing your opponent is able to see the position of your mouse, You are able to use this to lead your opponent to fake paths.
+  Also make sure to manage your electricity, You can spend electricity on Power Towers to increase your electricity income. 
+  But if you spend too much time focussing on this, Your opponent might have already found your core
+  Will you be able to find and destroy your opponent before your opponent finds you?
+
+
+CONTROLS:
+  -hold right click for building
+  -hold left click for mouse abilities
+  -move your mouse
+  and thats it!
+
+BUILDINGS:
+  RADIO:
+    Radio's emit a signal of 300 pixels range that will detect any opponents mouse movements.
+    Place multiple radio's across the map to make sure you know what your opponent is doing!
+  ELECTRICITY BOX:
+    Place these to emit your core's electricity over a greater range.
+  POWER TOWER:
+    One of the most important buildings. This building will provide you with more power!
+    7.5 Power per Power Tower to be precise.
+
+ABILITIES:
+  DESTROY:
+    Destroy every building in a 30 pixel radius. 
+    This is the only way currently to destroy an opponents core!
+  SIGHT:
+    See every building in a 100 pixel radius!
+    This is one of the most important abilities.
+    Use this to find your opponents core!
+    But be carefull, Your opponent will see when you use sight and where.
+  TRAIL:
+    This will reveal a trail of the opponents mouse of the last 10 seconds.
+    Using trail can be one of the easiest way to find where the opponent is hiding.
+  INVISIBLE:
+    This makes you invisible to trail and radio's of the opponent for 10 seconds!
+    Use this when your doing suspicious buisness you don't want your opponent to see.
+  
+
+
+HOW TO PLAY:
+  The goal of the game is to destroy your opponents core (white cube).
+  But you can't see any of your opponents buildings.
+  An important strategy is to leave your core as fast as possible. Do this using electricity boxes.
+  After that place multiple Power Towers to increase your income. 
+  But don't waste too much time collecting power, Before you know your opponent might have already found you!
+  Next is to find your opponents hideout. 
+  First is to place multiple radios to get a general idea of where your opponent is moving his mouse.
+  Next is using the sight ability to find your opponents buildings, And most importantly their core!
+  After you have found their core, Use the destroy ability on it to win the game.
+
+DISCORD:
+  Feel free to join my discord server: https://discord.gg/3S5SyXP
+  Use it if you found any bugs or have any nice suggestions.
+  Or just come to hangout
