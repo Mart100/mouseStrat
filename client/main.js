@@ -26,6 +26,12 @@ $(() => {
     $('body').html(`
     <div id="title">MouseStrat</div>
     <div id="play">Click to play</div>
+    <br><br>
+    <center>
+    <a href="https://martve.me">Made by: Marto_0</a>
+    <br><br>
+    <a href="https://discord.gg/3S5SyXP">Join us on discord:<br> <img src="https://i.imgur.com/yoSi7FR.png"/></a>
+    </center>
     `)
     $('#play').on('click', () => {
       window.location = './find'

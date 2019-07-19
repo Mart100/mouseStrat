@@ -67,3 +67,10 @@ body {
   color: black;
   border: 2px solid black;
 }
+a {
+  color: white;
+}
+img {
+  width: 50px;
+  height: 50px;
+}
